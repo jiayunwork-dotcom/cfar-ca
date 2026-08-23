@@ -30,6 +30,7 @@ func LocalPeaks(res *model.Result) []TargetCandidate {
 			Peak:      isLocalPeak(res, i),
 		}
 		if tc.Peak {
+			tagPeakLive(tc.Index, tc.Amplitude)
 			out = append(out, tc)
 		}
 	}
