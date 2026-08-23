@@ -46,6 +46,7 @@ func DetectWithAlpha(cfg *model.DetectorConfig, alpha float64) (*model.Result, e
 	for i := 0; i < cfg.SequenceLength(); i++ {
 		res.Cells[i] = detectOne(cfg, i, alpha)
 	}
+	model.BindCellLive(res)
 	return res, nil
 }
 
