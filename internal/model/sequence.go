@@ -102,9 +102,7 @@ func (s *Sequence) Sub(lo, hi int) []float64 {
 	if hi > len(s.samples) {
 		hi = len(s.samples)
 	}
-	out := make([]float64, hi-lo)
-	copy(out, s.samples[lo:hi])
-	return out
+	return liveSeqView(s.samples[lo:hi])
 }
 
 // IsConstant 判断序列是否近似恒定（用于测试与诊断）。
