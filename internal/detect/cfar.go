@@ -4,6 +4,7 @@ import (
 	"math"
 
 	"cfar-ca/internal/model"
+	"cfar-ca/internal/stats"
 )
 
 // nanValue 返回 NaN，用于标记无效 CUT 的阈值/裕量占位。
@@ -46,6 +47,7 @@ func DetectWithAlpha(cfg *model.DetectorConfig, alpha float64) (*model.Result, e
 	for i := 0; i < cfg.SequenceLength(); i++ {
 		res.Cells[i] = detectOne(cfg, i, alpha)
 	}
+	stats.FlattenThresholds(res)
 	return res, nil
 }
 
