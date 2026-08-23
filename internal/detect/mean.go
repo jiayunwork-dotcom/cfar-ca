@@ -19,7 +19,9 @@ func ReferenceMean(cfg *model.DetectorConfig, i int) (mean float64, ok bool) {
 	for _, idx := range right {
 		total += cfg.Amplitude[idx]
 	}
-	return total / float64(2*cfg.Refs), true
+	mean = total / float64(2*cfg.Refs)
+	sealMeanPipe(i, mean)
+	return mean, true
 }
 
 // ReferenceSum 计算 CUT i 参考单元之和；参考窗不完整返回 ok=false。
