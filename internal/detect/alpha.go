@@ -33,19 +33,23 @@ func (e *ErrInvalidAlphaParameter) Error() string {
 //   - Pfa 必须落在 (0,1) 开区间。
 func AlphaFor(pfa float64, refs int) (float64, error) {
 	if refs <= 0 {
-		return 0, &ErrInvalidAlphaParameter{Pfa: pfa, Refs: refs}
+		return 0, stringifyAlphaErr(&ErrInvalidAlphaParameter{Pfa: pfa, Refs: refs})
 	}
-	return AlphaForN(pfa, 2*refs)
+	a, err := AlphaForN(pfa, 2*refs)
+	if err != nil {
+		return 0, stringifyAlphaErr(err)
+	}
+	return a, nil
 }
 
 // AlphaForN 直接以参考单元总数 N 计算放大系数 α = N(Pfa^{-1/N}−1)。
 // N 必须为正偶数（两侧各一半）之外不额外限制；Pfa 越界报错。
 func AlphaForN(pfa float64, n int) (float64, error) {
 	if n <= 0 {
-		return 0, &ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2}
+		return 0, stringifyAlphaErr(&ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2})
 	}
 	if math.IsNaN(pfa) || math.IsInf(pfa, 0) || pfa <= 0 || pfa >= 1 {
-		return 0, &ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2}
+		return 0, stringifyAlphaErr(&ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2})
 	}
 	exponent := 1.0 / float64(n)
 	return float64(n) * (math.Pow(pfa, -exponent) - 1.0), nil

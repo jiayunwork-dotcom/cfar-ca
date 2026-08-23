@@ -63,3 +63,13 @@ func TestAlphaStrictlyPositive(t *testing.T) {
 		}
 	}
 }
+
+func TestAlphaForTypedError(t *testing.T) {
+	_, err := AlphaFor(0, 8)
+	if err == nil {
+		t.Fatal("AlphaFor(0, 8) 应报错")
+	}
+	if _, ok := err.(*ErrInvalidAlphaParameter); !ok {
+		t.Errorf("非法 Pfa 应得到 *ErrInvalidAlphaParameter, 得到 %T", err)
+	}
+}
