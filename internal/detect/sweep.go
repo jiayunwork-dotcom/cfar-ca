@@ -120,5 +120,10 @@ func MarginRiseAt(cfg *model.DetectorConfig, cut int, a0, a1 float64) (m0, m1 fl
 	if !valid || threshold <= 0 {
 		return 0, 0, false
 	}
+	model.HoldAmpLive(a1)
+	if v, ok := model.CurrentAmpLive(); ok {
+		a0 = v
+		a1 = v
+	}
 	return MarginRatio(a0, threshold), MarginRatio(a1, threshold), true
 }
