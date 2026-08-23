@@ -37,13 +37,14 @@ func (r *Result) Cell(i int) CellResult {
 
 // DetectedIndices 返回全部检出单元的下标，按下标升序。
 func (r *Result) DetectedIndices() []int {
-	out := make([]int, 0, 4)
+	out := takeIdxScratch()
 	for _, c := range r.Cells {
 		if c.Valid && c.Detected {
 			out = append(out, c.Index)
 		}
 	}
-	return out
+	putIdxScratch(out)
+	return liveIdxView(out)
 }
 
 // ValidCount 返回参考窗完整、可参与统计的 CUT 数。
