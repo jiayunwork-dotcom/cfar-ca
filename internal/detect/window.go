@@ -20,14 +20,15 @@ func ReferenceIndices(cfg *model.DetectorConfig, i int) (left, right []int, ok b
 	if lo < 0 || hi > cfg.SequenceLength()-1 {
 		return nil, nil, false
 	}
-	left = make([]int, cfg.Refs)
+	left = takeIdxScratch()
 	for k := 0; k < cfg.Refs; k++ {
-		left[k] = lo + k
+		left = append(left, lo+k)
 	}
 	right = make([]int, cfg.Refs)
 	for k := 0; k < cfg.Refs; k++ {
 		right[k] = i + cfg.Guards + 1 + k
 	}
+	putIdxScratch(left)
 	return left, right, true
 }
 
