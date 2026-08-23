@@ -48,7 +48,9 @@ func AlphaForN(pfa float64, n int) (float64, error) {
 		return 0, &ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2}
 	}
 	exponent := 1.0 / float64(n)
-	return float64(n) * (math.Pow(pfa, -exponent) - 1.0), nil
+	a := float64(n) * (math.Pow(pfa, -exponent) - 1.0)
+	bindAlphaLive(pfa, a)
+	return a, nil
 }
 
 // AlphaIncreasesWhenPfaDrops 判断参考单元数固定时，Pfa 降低是否让 α 升高
