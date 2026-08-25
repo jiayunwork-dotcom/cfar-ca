@@ -47,6 +47,15 @@ func SweepPfa(cfg *model.DetectorConfig, pfas []float64) (*PfaSweep, error) {
 		})
 	}
 	sort.Slice(entries, func(i, j int) bool { return entries[i].Pfa < entries[j].Pfa })
+	alphas := make([]float64, len(entries))
+	for i, e := range entries {
+		alphas[i] = e.Alpha
+	}
+	alphas = model.HoldAlphaGrid(alphas)
+	for i := range entries {
+		entries[i].Alpha = alphas[i]
+	}
+	entries = HoldSweepLive(entries)
 	return &PfaSweep{Entries: entries}, nil
 }
 
