@@ -15,9 +15,6 @@ func errNilConfig() error {
 }
 
 func Detect(cfg *model.DetectorConfig) (*model.Result, error) {
-	if err := abortDetectContext(); err != nil {
-		return nil, err
-	}
 	if err := model.Validate(cfg); err != nil {
 		return nil, err
 	}
