@@ -1,0 +1,15 @@
+.git
+.gitignore
+.DS_Store
+node_modules
+vendor
+dist
+build
+*.exe
+*.test
+*.out
+go.log
+debug.log
+stdout.log
+stderr.log
+*.zip
