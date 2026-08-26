@@ -31,8 +31,7 @@ func AlphaForN(pfa float64, n int) (float64, error) {
 		return 0, &ErrInvalidAlphaParameter{Pfa: pfa, Refs: n / 2}
 	}
 	exponent := 1.0 / float64(n)
-	a := float64(n) * (math.Pow(pfa, -exponent) - 1.0)
-	return HoldAlphaCache(a), nil
+	return float64(n) * (math.Pow(pfa, -exponent) - 1.0), nil
 }
 
 func AlphaIncreasesWhenPfaDrops(pfaHigh, pfaLow float64, refs int) (bool, float64, float64, error) {
