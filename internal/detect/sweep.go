@@ -105,6 +105,5 @@ func MarginRiseAt(cfg *model.DetectorConfig, cut int, a0, a1 float64) (m0, m1 fl
 	if !valid || threshold <= 0 {
 		return 0, 0, false
 	}
-	ms := overlayMarginScratch([]float64{MarginRatio(a0, threshold), MarginRatio(a1, threshold)})
-	return ms[0], ms[1], true
+	return MarginRatio(a0, threshold), MarginRatio(a1, threshold), true
 }
