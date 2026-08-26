@@ -37,7 +37,7 @@ func DetectWithAlpha(cfg *model.DetectorConfig, alpha float64) (*model.Result, e
 	for i := 0; i < cfg.SequenceLength(); i++ {
 		res.Cells[i] = detectOne(cfg, i, alpha)
 	}
-	return HoldGuardLive(res), nil
+	return res, nil
 }
 
 func detectOne(cfg *model.DetectorConfig, i int, alpha float64) model.CellResult {
