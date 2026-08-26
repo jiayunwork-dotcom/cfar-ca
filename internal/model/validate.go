@@ -8,24 +8,24 @@ import (
 
 func Validate(c *DetectorConfig) error {
 	if c == nil {
-		return bindBadCfg(&ConfigError{Reason: "配置为空"})
+		return &ConfigError{Reason: "配置为空"}
 	}
 	if err := validatePfa(c.Pfa); err != nil {
-		return bindBadCfg(err)
+		return err
 	}
 	if err := validateWindow(c.Guards, c.Refs); err != nil {
-		return bindBadCfg(err)
+		return err
 	}
 	if err := validateAmplitudes(c.Amplitude); err != nil {
-		return bindBadCfg(err)
+		return err
 	}
 	if len(c.Amplitude) <= 2*c.WindowHalf() {
-		return bindBadCfg(&ConfigError{
+		return &ConfigError{
 			Reason: fmt.Sprintf(
 				"参考窗伸出序列：序列长 %d 需要 > 2×(保护%d+参考%d)=%d",
 				len(c.Amplitude), c.Guards, c.Refs, 2*c.WindowHalf(),
 			),
-		})
+		}
 	}
 	return nil
 }
